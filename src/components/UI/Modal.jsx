@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 import classes from "./Modal.module.css";
 
 //Creates a black backdrop for overlays
-const Backdrop = () => {
-  return <div className={classes.backdrop}></div>;
+const Backdrop = (props) => {
+  return <div className={classes.backdrop} onClick={props.closeCart}></div>;
 };
 
 //Returns a container for cart content
@@ -23,7 +23,7 @@ const Modal = (props) => {
   
   return (
     <>
-      {createPortal(<Backdrop />, portalElement)}
+      {createPortal(<Backdrop closeCart={props.closeCart}/>, portalElement)}
       {createPortal(<ModalOverlay>{props.children}</ModalOverlay>, portalElement)}
     </>
   );
