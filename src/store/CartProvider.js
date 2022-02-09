@@ -12,7 +12,16 @@ const defaultCartState = {
 
 //Shouldn't be recreated everytime the component is reevaluated, so we put outside of Component
 const cartReducer = (state, action) => {
- 
+  if (action.type === "ADD") {
+    //Concat returns a new array instead of mutating the current one like push
+    const updatedItems = state.items.concat(action.item);
+    //existing??
+    const updatedTotalAmount = state.totalAmount + (action.item.price * action.item.amount);
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount
+    };
+  }
   return defaultCartState
 }
 
