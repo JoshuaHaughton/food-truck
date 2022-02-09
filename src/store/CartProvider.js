@@ -35,8 +35,11 @@ const CartProvider = (props) => {
     dispatchCartAction({type: 'ADD', item: item});
   }
 
+  
 
   const removeCartItem = id => {}
+
+
 
   const cartContext = {
     items: cartState.items,
@@ -44,6 +47,7 @@ const CartProvider = (props) => {
     addItem: addCartItem,
     removeItem: removeCartItem
   }
+
 
   return (
     <CartContext.Provider value={cartContext}>
