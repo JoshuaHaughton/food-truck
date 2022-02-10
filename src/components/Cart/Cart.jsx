@@ -12,9 +12,13 @@ const Cart = (props) => {
   //True if cart isn't empty
   const hasItems = cartCtx.items.length > 0;
 
-  const removeCartItem = (id) => {};
+  const removeCartItem = (id) => {
+    cartCtx.minusItem(id);
+  };
 
-  const addCartItem = (item) => {};
+  const addCartItem = (item) => {
+    cartCtx.addItem({...item, amount: 1})
+  };
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
