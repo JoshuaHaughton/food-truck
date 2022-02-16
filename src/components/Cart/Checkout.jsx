@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import useInput from "../hooks/use-input";
 import classes from "./Checkout.module.css";
 const Checkout = (props) => {
 
-  
+
 
   const {
     value: enteredName,
@@ -12,6 +12,7 @@ const Checkout = (props) => {
     reset: resetNameInput,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
+    submitHandler: nameSubmitHandler
   } = useInput((value) => value.trim() !== '');
 
   const {
@@ -21,6 +22,7 @@ const Checkout = (props) => {
     reset: resetCityInput,
     valueChangeHandler: cityChangeHandler,
     inputBlurHandler: cityBlurHandler,
+    submitHandler: citySubmitHandler
   } = useInput((value) => value.trim() !== '');
 
   const {
@@ -30,6 +32,7 @@ const Checkout = (props) => {
     reset: resetStreetInput,
     valueChangeHandler: streetChangeHandler,
     inputBlurHandler: streetBlurHandler,
+    submitHandler: streetSubmitHandler
   } = useInput((value) => value.trim() !== '');
 
   const {
@@ -39,7 +42,8 @@ const Checkout = (props) => {
     reset: resetPostalInput,
     valueChangeHandler: postalChangeHandler,
     inputBlurHandler: postalBlurHandler,
-  } = useInput((value) => value.trim() !== '' && value.trim().length <= 7);
+    submitHandler: postalSubmitHandler
+  } = useInput((value) => value.trim() !== '' && value.trim().length <= 7 && value.trim().length >= 5);
 
   let formIsValid = false;
 
@@ -55,6 +59,12 @@ const Checkout = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
 
+    // Sets all input fields to touched on submission so an error comes up if it is invalid
+    nameSubmitHandler()
+    citySubmitHandler()
+    streetSubmitHandler()
+    postalSubmitHandler()
+
 
     //If a field is invalid
     if (
@@ -67,10 +77,20 @@ const Checkout = (props) => {
     }
 
     //If everything works
-    resetNameInput();
-    resetCityInput();
-    resetStreetInput();
-    resetPostalInput();
+
+    props.onConfirm({
+      name: enteredName,
+      city: enteredCity,
+      street: enteredStreet,
+      postal: enteredPostal
+    });
+
+    props.closeCart();
+
+    // resetNameInput();
+    // resetCityInput();
+    // resetStreetInput();
+    // resetPostalInput();
   };
 
   const nameInputClasses = !nameInputHasError

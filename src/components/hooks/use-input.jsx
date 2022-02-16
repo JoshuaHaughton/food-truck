@@ -20,6 +20,10 @@ const inputStateReducer = (state, action) => {
     return { isTouched: false, value: '' }
   }
 
+  if (action.type === "SUBMIT") {
+    return { isTouched: true, value: state.value }
+  }
+
   return inputStateReducer
 }
 
@@ -41,6 +45,10 @@ const useInput = (validateValue) => {
     dispatch({type: "RESET"})
   };
 
+  const submitHandler = () => {
+    dispatch({type: "SUBMIT"})
+  }
+
   return {
     value: inputState.value,
     hasError,
@@ -48,6 +56,7 @@ const useInput = (validateValue) => {
     valueChangeHandler,
     isValid: valueIsValid,
     reset,
+    submitHandler
   };
 };
 
