@@ -50,7 +50,7 @@ const cartReducer = (state, action) => {
     let updatedItems;
     // If there's 1 item left
     if (existingItem.amount === 1) {
-      //Remove it from the items arrat
+      //Remove it from the items array
       updatedItems = state.items.filter((item) => item.id !== action.id);
     } else {
       //Else minus the amount by 1
@@ -85,6 +85,10 @@ const cartReducer = (state, action) => {
     };
   }
 
+  if (action.type === "CLEAR") {
+    return defaultCartState;
+  }
+
   return defaultCartState;
 };
 
@@ -108,6 +112,10 @@ const CartProvider = (props) => {
     dispatchCartAction({ type: "REMOVE", id });
   }
 
+   const clearEntireCart = () => {
+     dispatchCartAction({type: "CLEAR"})
+   }
+
 
 
   const cartContext = {
@@ -115,7 +123,8 @@ const CartProvider = (props) => {
     totalAmount: cartState.totalAmount,
     addItem: addCartItem,
     minusItem: minusCartItem,
-    removeItem: removeCartItem
+    removeItem: removeCartItem,
+    clearCart: clearEntireCart
   };
 
   return (

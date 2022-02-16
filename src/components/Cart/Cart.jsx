@@ -59,6 +59,7 @@ const Cart = (props) => {
     }, 300)
 
     setDidSubmit(true);
+    cartCtx.clearCart();
 
     } catch (error) {
       console.log(error.message);
@@ -111,7 +112,7 @@ const Cart = (props) => {
     </>
   );
 
-  const didSubmitModalContent = <><p>Successfully sent the order to the firebase backend! This is a portfolio project so we can't actually send anything to you 😅
+  const didSubmitModalContent = <><p>Successfully sent the order to the firebase backend! This is a portfolio project so I can't actually send anything to you 😅
     <br/>
     <br/>
     Have a great day though!</p>
