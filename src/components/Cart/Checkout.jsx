@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import useInput from "../hooks/use-input";
 import classes from "./Checkout.module.css";
 const Checkout = (props) => {
 
+  const [orderError, setOrderError] = useState(false);
 
 
   const {
@@ -56,7 +57,7 @@ const Checkout = (props) => {
     formIsValid = true;
   }
 
-  const confirmHandler = (event) => {
+  const confirmHandler = async (event) => {
     event.preventDefault();
 
     // Sets all input fields to touched on submission so an error comes up if it is invalid
@@ -78,14 +79,29 @@ const Checkout = (props) => {
 
     //If everything works
 
-    props.onConfirm({
-      name: enteredName,
-      city: enteredCity,
-      street: enteredStreet,
-      postal: enteredPostal
-    });
+    try {
+      const response = props.onConfirm({
+        name: enteredName,
+        city: enteredCity,
+        street: enteredStreet,
+        postal: enteredPostal
+      });
 
-    props.closeCart();
+      if (!response.ok) {
+        throw new Error('Something went wrong when submitting your order! Please try again later');
+      }
+      //If error isn't thrown and shown to user, close cart
+      props.closeCart();
+
+      //Cleanup if past order wasn't submitted successfully
+      setOrderError(false)
+      
+    } catch (err) {
+      console.log(err);
+      setOrderError(err.message)
+    }
+
+
 
     // resetNameInput();
     // resetCityInput();
@@ -146,6 +162,7 @@ const Checkout = (props) => {
         value={enteredPostal}/>
         {postalInputHasError && <p className={classes.errorText}>Please enter a valid Postal Code</p>}
       </div>
+      {orderError && <p className={classes.errorText}>{orderError}</p>}
       <div className={classes.actions}>
         <button type="button" onClick={props.closeCart}>
           Cancel

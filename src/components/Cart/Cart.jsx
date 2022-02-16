@@ -7,6 +7,7 @@ import Checkout from './Checkout'
 
 const Cart = (props) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const cartCtx = useContext(CartContext);
 
   //Total price in cart
@@ -30,14 +31,21 @@ const Cart = (props) => {
     setIsCheckingOut(true)
   }
 
-  const submitOrderHandler = (userData) => {
-    fetch('https://react-http-41b17-default-rtdb.firebaseio.com/orders.json', {
+  const submitOrderHandler = async (userData) => {
+    setIsSubmitting(true);
+    const response = await fetch('https://react-http-41b17-default-rtdb.firebaseio.com/', {
       method: "POST",
       body: JSON.stringify({
         user: userData,
         orderedItems: cartCtx.items
       })
     })
+
+    console.log(response);
+    return response;
+
+
+
   }
 
 
