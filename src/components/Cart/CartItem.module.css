@@ -38,12 +38,6 @@
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
-  .actions {
-    flex-direction: row;
-  }
-}
-
 .cart-item button {
   font: inherit;
   font-weight: bold;
@@ -63,4 +57,28 @@
 .cart-item button:active {
   background-color: #296600;
   color: white;
+}
+
+.remove {
+  color: rgb(161, 18, 18);
+}
+
+#removeButton {
+  border-color: rgb(161, 18, 18);
+  background-color: white;
+}
+
+#removeButton:hover {
+  border-color: rgb(161, 18, 18);
+  background-color: rgb(161, 18, 18);
+}
+
+#removeButton:hover .remove{
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .actions {
+    flex-direction: row;
+  }
 }

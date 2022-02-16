@@ -13,8 +13,8 @@ const CartItem = (props) => {
         <div className={classes.summary}>
           <span className={classes.price}>{price}</span>
           <span className={classes.amount}>x {props.amount}</span>
-          <button onClick={props.onRemove}>
-            <FontAwesomeIcon icon="fa-solid fa-trash-can" />
+          <button onClick={props.onRemove} id={classes.removeButton}>
+            <FontAwesomeIcon icon="fa-solid fa-trash-can" className={classes.remove} />
           </button>
         </div>
       </div>
